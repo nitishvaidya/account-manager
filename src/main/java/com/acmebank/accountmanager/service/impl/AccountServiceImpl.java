@@ -73,6 +73,10 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	private void ensureAccountHasEnoughMoney(AccountEntity accountFromEntity, BigDecimal amount, Currency currency) throws Exception {
+		if(amount.doubleValue()<=0){
+			throw new CustomException("Amount should be greater than 0");
+		}
+		
 		if(accountFromEntity.getCurrency() != currency ||  accountFromEntity.getBalance().subtract(amount).doubleValue() <  0){
 			throw new CustomException("Insufficient balance in account");
 		}
